@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PostSchema = new mongoose.Schema(
+const YoutubeSchema = new mongoose.Schema(
   {
     creatorId: {
       type: String,
@@ -30,4 +30,4 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Post", PostSchema);
+export default mongoose.model("Youtube", YoutubeSchema);
