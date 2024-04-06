@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from "./routes/user.js";
 import authRoute from "./routes/authentication.js";
-import postRoute from "./routes/post.js";
+import youtubetRoute from "./routes/youtube.js";
 import cookieParser from "cookie-parser";
 const app = express();
 dotenv.config();
@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
-app.use("/api/post", postRoute);
+app.use("/api/youtube", youtubetRoute);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
