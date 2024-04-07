@@ -58,3 +58,23 @@ export const unsubscribe = async (req, res, next) => {
     next(err);
   }
 };
+
+export const allEditor = async (req, res, next) => {
+  //return all the users with type false from mongose User
+  try {
+    console.log("arole");
+    const editors = await User.find({ type: true });
+    res.status(200).json(editors);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// export const allCreator = async (req, res, next) => {
+//   //return all the users with type false from mongose User
+//   try {
+//     const editors = await User.find({ type: false });
+//   } catch (err) {
+//     next(err);
+//   }
+// };

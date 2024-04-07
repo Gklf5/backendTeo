@@ -1,5 +1,6 @@
 import Express from "express";
 import {
+  allEditor,
   deleteUser,
   getUser,
   subscribe,
@@ -18,6 +19,7 @@ router.delete("/:id", verifyToken, deleteUser);
 
 //get a user
 router.get("/find/:id", getUser);
+router.get("/find/edi", allEditor);
 
 //sub a emplyee
 router.put("/sub/:id", verifyToken, subscribe);

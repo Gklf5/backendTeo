@@ -24,12 +24,17 @@ const UserSchema = new mongoose.Schema(
     },
     type: {
       type: Boolean,
+      default: false,
     },
     employee: {
       type: String,
     },
     projects: {
       type: [String],
+      default: [],
+    },
+    role: {
+      type: String,
     },
   },
   { timestamps: true }
