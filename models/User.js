@@ -28,6 +28,9 @@ const UserSchema = new mongoose.Schema(
     employee: {
       type: String,
     },
+    projects: {
+      type: [String],
+    },
   },
   { timestamps: true }
 );

@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 
 const YoutubeSchema = new mongoose.Schema(
   {
-    creatorId: {
+    creator: {
       type: String,
-      required: true,
     },
-    editorId: {
+    editor: {
       type: String,
     },
     title: {

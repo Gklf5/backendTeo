@@ -1,10 +1,7 @@
 import Youtube from "../models/Youtube.js";
 
 export const addYoutube = async (req, res, next) => {
-  let newYoutube = new Youtube({
-    creatorId: req.user.id,
-    ...req.body,
-  });
+  let newYoutube = new Youtube(req.body);
   try {
     const saveYoutube = await newYoutube.save();
     res.status(200).json(saveYoutube);

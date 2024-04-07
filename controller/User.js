@@ -51,7 +51,7 @@ export const subscribe = async (req, res, next) => {
 export const unsubscribe = async (req, res, next) => {
   try {
     await User.findById(req.user.id, {
-      employee: " ",
+      employee: "",
     });
     res.status(200).json("unEmployed");
   } catch (err) {
