@@ -10,7 +10,7 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    editor: {
+    assigned_editor: {
       type: String,
     },
     img: {

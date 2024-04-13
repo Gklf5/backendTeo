@@ -20,18 +20,20 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     socialMedia: {
+      type: [String],
+    },
+    role: {
       type: String,
     },
-    type: {
-      type: Boolean,
-      default: false,
-    },
-    employee: {
-      type: String,
+    editors: {
+      type: [String],
     },
     projects: {
       type: [String],
       default: [],
+    },
+    assigned_by:{
+      type: [String],
     },
     role: {
       type: String,

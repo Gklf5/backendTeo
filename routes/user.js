@@ -1,9 +1,13 @@
 import Express from "express";
 import {
   allEditor,
+  assignEditor,
   deleteUser,
+  getAssignedBy,
+  getEditors,
   getUser,
   subscribe,
+  unAssignEditor,
   unsubscribe,
   updateUser,
 } from "../controller/User.js";
@@ -19,12 +23,17 @@ router.delete("/:id", verifyToken, deleteUser);
 
 //get a user
 router.get("/find/:id", getUser);
-router.get("/find/edi", allEditor);
 
-//sub a emplyee
-router.put("/sub/:id", verifyToken, subscribe);
+//get all editor
+router.get("/find/editors", getEditors);
 
-//unsub a emplyee
-router.put("/unsub/:id", verifyToken, unsubscribe);
+//get assigned by
+router.get("find/assigned", verifyToken, getAssignedBy)
+
+//assign a editor 
+router.put("/asssign/:id", verifyToken, assignEditor);
+
+//unAssign a editor
+router.put("/unassign/:id", verifyToken, unAssignEditor);
 
 export default router;
