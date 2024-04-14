@@ -32,12 +32,28 @@ const UserSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
-    assigned_by:{
+    assigned_by: {
       type: [String],
     },
     role: {
       type: String,
     },
+    requests: [
+      {
+        user: {
+          type: String,
+          required: true,
+        },
+        post: {
+          type: String,
+          required: true,
+        },
+        state: {
+          type: String,
+          default: "unseen",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

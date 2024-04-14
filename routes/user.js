@@ -1,14 +1,17 @@
-import Express from "express";
+import Express, { request } from "express";
 import {
-  allEditor,
   assignEditor,
   deleteUser,
+  getAllCreators,
+  getAllEditors,
   getAssignedBy,
   getEditors,
   getUser,
-  subscribe,
+  requestAccept,
+  requestDelete,
+  requestPost,
+  requestReject,
   unAssignEditor,
-  unsubscribe,
   updateUser,
 } from "../controller/User.js";
 import { verifyToken } from "../verifyToken.js";
@@ -25,15 +28,25 @@ router.delete("/:id", verifyToken, deleteUser);
 router.get("/find/:id", getUser);
 
 //get all editor
-router.get("/find/editors", getEditors);
+router.get("/find/editors", verifyToken, getEditors);
 
 //get assigned by
-router.get("find/assigned", verifyToken, getAssignedBy)
+router.get("/find/assigned", verifyToken, getAssignedBy);
 
-//assign a editor 
-router.put("/asssign/:id", verifyToken, assignEditor);
+//assign a editor
+router.put("/assign/:id", verifyToken, assignEditor);
 
 //unAssign a editor
 router.put("/unassign/:id", verifyToken, unAssignEditor);
 
+//get all user with editor
+router.get("/editors", getAllEditors);
+
+//get all user with editor
+router.get("/creators", getAllCreators);
+
+router.put("/request", verifyToken, requestPost);
+router.put("/request/reject", verifyToken, requestReject);
+router.put("/request/accept", verifyToken, requestAccept);
+router.put("/request/delete", verifyToken, requestDelete);
 export default router;

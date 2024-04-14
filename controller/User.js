@@ -1,7 +1,6 @@
 import { createError } from "../error.js";
 import User from "../models/User.js";
 
-
 export const updateUser = async (req, res, next) => {
   if (req.params.id === req.user.id) {
     try {
@@ -46,45 +45,131 @@ export const getUser = async (req, res, next) => {
 export const getEditors = async (req, res, next) => {
   try {
     const editorList = await User.find(req.user.id);
-    const editors = Promise.all(editorList.map((editor) => {
-      return User.findById(editor);
-    }))
+    const editors = Promise.all(
+      editorList.map((editor) => {
+        return User.findById(editor);
+      })
+    );
     res.status(200).json(editors);
   } catch (err) {
     next(err);
   }
 };
 
-export const assignEditor = async (req,res,next)=>{
-try {
-  await User.findByIdAndUpdate(req.user.id, {
-  $push: {editors:req.params.id}
-},{new:true})
-res.status(200).json(res.body)
-} catch (err) {
-  next(err)
-}
-}
-
-export const unAssignEditor = async (req,res,next) =>{
+export const assignEditor = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.user.id,{
-      $pull:{editors:req.params.id}
-    })
-    res.status(200).json("Successfully ")
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $addToSet: { editors: req.params.id },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
   } catch (err) {
-    next(err)
-    
+    next(err);
   }
-}
+};
 
-
-export const getAssignedBy = async (req,res,next) => {
+export const unAssignEditor = async (req, res, next) => {
   try {
-    const creator = await User.findById(req.user.assigned_by)
-    res.status(200).json(creator)
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $pull: { editors: req.params.id },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
+export const getAssignedBy = async (req, res, next) => {
+  try {
+    const creator = await User.findById(req.user.assigned_by);
+    res.status(200).json(creator);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllEditors = async (req, res, next) => {
+  try {
+    //list of all users with role attribute === editors
+    const editors = await User.find({ role: "editor" });
+    res.status(200).json(editors);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllCreators = async (req, res, next) => {
+  try {
+    //list of all users with role attribute === editors
+    const creator = await User.find({ role: "creator" });
+    res.status(200).json(creator);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const requestPost = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.body.user, {
+      $push: { requests: { user: req.user.id, post: req.body.post } },
+    });
+    await User.findByIdAndUpdate(req.user.id, {
+      $push: { requests: req.body },
+    });
+    res.status(200).json("Success");
+  } catch (err) {
+    next(err);
+  }
+};
+export const requestDelete = async (req, res, next) => {
+  try {
+    let user = await User.findById(req.user.id);
+    let requestIndex = user.requests.findIndex(
+      (request) => request.user === req.body.user
+    );
+    user.requests.splice(requestIndex, 1);
+    await user.save();
+    user = await User.findById(req.body.user);
+    requestIndex = user.requests.findIndex(
+      (request) => request.user === req.user.id
+    );
+    user.requests.splice(requestIndex, 1);
+    await user.save();
+    res.status(200).json("Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const requestReject = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.body.user, {
+      $set: { requests: { state: "rejected" } },
+    });
+    await User.findByIdAndUpdate(req.user.id, {
+      $set: { requests: { state: "rejected" } },
+    });
+    res.status(200).json("Success");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const requestAccept = async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
