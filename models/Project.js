@@ -19,6 +19,12 @@ const projectSchema = new mongoose.Schema(
     socialMedia: {
       type: String,
     },
+    files: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
