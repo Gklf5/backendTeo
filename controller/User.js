@@ -44,14 +44,18 @@ export const getUser = async (req, res, next) => {
 
 export const getEditors = async (req, res, next) => {
   try {
-    const editorList = await User.find(req.user.id);
-    const editors = Promise.all(
-      editorList.map((editor) => {
-        return User.findById(editor);
+    // console.log(req.params.id);
+    const user = await User.findById(req.params.id);
+    const editorList = user.editors; // Assuming user.editors contains array of editor IDs
+    const editors = await Promise.all(
+      editorList.map((editorId) => {
+        return User.findById(editorId);
       })
     );
+    console.log(editors);
     res.status(200).json(editors);
   } catch (err) {
+    // console.error(err);
     next(err);
   }
 };

@@ -1,4 +1,4 @@
-import Express, { request } from "express";
+import Express from "express";
 import {
   assignEditor,
   deleteUser,
@@ -28,7 +28,9 @@ router.delete("/:id", verifyToken, deleteUser);
 router.get("/find/:id", getUser);
 
 //get all editor
-router.get("/find/editors", verifyToken, getEditors);
+
+//get editors for a user
+router.get("/find/editors/:id", getEditors);
 
 //get assigned by
 router.get("/find/assigned", verifyToken, getAssignedBy);

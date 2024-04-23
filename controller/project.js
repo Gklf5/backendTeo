@@ -55,13 +55,13 @@ export const updateProject = async (req, res, next) => {
 
 export const updateProjectEditor = async (req, res, next) => {
   const project = await Project.findById(req.params.id);
-  const user = await User.findById(req.user.id);
+  console.log(req.body.editor);
   if (project.creator === req.user.id) {
     try {
       const updatedProject = await Project.findByIdAndUpdate(req.params.id, {
-        editor: user.employee,
+        assigned_editor: req.body.editor,
       });
-      await User.findByIdAndUpdate(user.employee, {
+      await User.findByIdAndUpdate(req.body.editor, {
         $push: { projects: req.params.id },
       });
       res.status(200).json(updatedProject);
