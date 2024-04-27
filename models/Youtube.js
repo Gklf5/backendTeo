@@ -23,7 +23,7 @@ const YoutubeSchema = new mongoose.Schema(
     },
     approved: {
       type: Boolean,
-      default:true,
+      default: true,
     },
   },
   { timestamps: true }
