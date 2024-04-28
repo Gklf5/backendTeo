@@ -2,21 +2,17 @@ import mongoose from "mongoose";
 
 const SocialMediaSchema = new mongoose.Schema(
   {
-    name: {
+    media: {
       type: String,
       required: true,
       unique: true,
     },
     api_key: {
       type: String,
-      required: true,
     },
+    cred: {},
     creator: {
       type: String,
-    },
-    projects: {
-      type: [String],
-      default: [],
     },
   },
   { timestamps: true }
