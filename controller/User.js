@@ -48,7 +48,8 @@ export const getEditors = async (req, res, next) => {
     // console.log("TRIGGERD");
     const user = await User.findById(req.params.id);
     const editorList = user.editors;
-    if (editorList.length) {
+    // console.log(editorList);
+    if (editorList.length !== 0) {
       const editors = await Promise.all(
         editorList.map((editorId) => {
           return User.findById(editorId);
@@ -57,7 +58,8 @@ export const getEditors = async (req, res, next) => {
       console.log(editors);
       res.status(200).json(editors);
     } else {
-      // res.status(200).json("Not editors");
+      // console.log("no editors");
+      res.status(200).json(null);
     }
   } catch (err) {
     // console.error(err);
@@ -78,7 +80,13 @@ export const assignEditor = async (req, res, next) => {
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { assigned_by: req.user.id },
+      },
+      { new: true }
+    );
     res.status(200).json(updatedUser);
   } catch (err) {
     next(err);
@@ -105,9 +113,10 @@ export const getAssignedBy = async (req, res, next) => {
     const user = await User.findById(req.params.id);
     if (user.assigned_by.length) {
       const creator = await User.findById(user.assigned_by[0]);
-      res.status(200).json(creator);
+      res.status(200).json([creator]);
     } else {
       // res.status(200).json("no creator");
+      res.status(200).json(null);
     }
   } catch (err) {
     next(err);
@@ -190,7 +199,7 @@ export const requestAccept = async (req, res, next) => {
 
 export const addSocials = async (req, res, next) => {
   try {
-    // console.log(req.body);
+    console.log(req.body);
     const newSocialMedia = new SocialMedia({
       ...req.body,
       creator: req.user.id,

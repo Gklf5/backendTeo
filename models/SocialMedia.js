@@ -5,12 +5,19 @@ const SocialMediaSchema = new mongoose.Schema(
     media: {
       type: String,
       required: true,
-      unique: true,
     },
     api_key: {
       type: String,
     },
-    cred: {},
+    cred: {
+      client_id: {
+        type: String,
+      },
+      client_secrete: {
+        type: String,
+      },
+    },
+    token: {},
     creator: {
       type: String,
     },
