@@ -35,6 +35,9 @@ const UserSchema = new mongoose.Schema(
     assigned_by: {
       type: [String],
     },
+    youtube: {
+      type: [String],
+    },
     role: {
       type: String,
     },

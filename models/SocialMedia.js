@@ -6,17 +6,7 @@ const SocialMediaSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    api_key: {
-      type: String,
-    },
-    cred: {
-      client_id: {
-        type: String,
-      },
-      client_secrete: {
-        type: String,
-      },
-    },
+    auth: {},
     token: {},
     creator: {
       type: String,

@@ -214,7 +214,7 @@ export const addSocials = async (req, res, next) => {
       },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+    res.status(200).json(savedSocialMedia.id);
   } catch (err) {
     next(err);
   }
