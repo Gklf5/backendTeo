@@ -16,6 +16,7 @@ const categoryIds = {
 const SCOPES = ["https://www.googleapis.com/auth/youtube.upload"];
 
 export const getToken = async (req, res) => {
+  console.log("Triggered");
   try {
     await SocialMedia.findByIdAndUpdate(
       req.params.id,
