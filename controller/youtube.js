@@ -6,7 +6,6 @@ export const addYoutube = async (req, res, next) => {
   console.log("triggerd");
   const newYoutube = new Youtube(req.body);
   const user = await User.findById(req.user.id);
-  console.log(user.assigned_by);
   try {
     const saveYoutube = await newYoutube.save();
     await User.findByIdAndUpdate(user.assigned_by[0], {

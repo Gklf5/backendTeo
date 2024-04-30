@@ -18,7 +18,7 @@ router.put("/:id", verifyToken, updateYTPost);
 router.delete("/:id", verifyToken, deleteYTPost);
 router.get("/find/:id", getYTPost);
 // router.post("/upload/:id", verifyToken, uploadYTPost);
-router.get("/upload/token/:id", getToken);
+router.put("/upload/token/:id", getToken);
 router.post("/upload/:id", verifyToken, uploadYTVideo);
 // router.get("/upload/:code", getToken);
 

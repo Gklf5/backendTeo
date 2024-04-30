@@ -16,6 +16,7 @@ const categoryIds = {
 const SCOPES = ["https://www.googleapis.com/auth/youtube.upload"];
 
 export const getToken = async (req, res) => {
+  console.log(req.body);
   console.log("Triggered");
   try {
     await SocialMedia.findByIdAndUpdate(
@@ -31,6 +32,7 @@ export const getToken = async (req, res) => {
 };
 
 const authorize = async (credentials, socialId, callback) => {
+  console.log(credentials);
   const clientSecret = credentials.client_secret;
   const clientId = credentials.client_id;
   const redirectUrl = "http://localhost:8000/callback";
@@ -71,12 +73,17 @@ const storeToken = async (token, socialId) => {
 export const uploadYTVideo = async (req, res) => {
   try {
     const videoPost = await Youtube.findById(req.params.id);
+    console.log(videoPost);
     const user = await User.findById(req.user.id);
     if (!user.socialMedia) {
       return;
     }
-    const socials = await SocialMedia.findById(user.socialMedia[0]);
+    const socialId = user.socialMedia[0];
+    console.log(socialId);
+    const socials = await SocialMedia.findById(socialId);
     //upload
+    console.log(socials);
+    console.log(user.socialMedia[0]);
     const clientSecret = socials.auth.client_secret;
     const clientId = socials.auth.client_id;
     const redirectUrl = "http://localhost:8000/callback";
